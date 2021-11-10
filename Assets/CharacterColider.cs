@@ -12,6 +12,8 @@ public class CharacterColider : MonoBehaviour
     float camRotationSpeed = 1.5f; 
 
     GameObject cam;
+    Rigidbody myRigidbody; 
+
 
 
     // Start is called before the first frame update
@@ -23,13 +25,20 @@ public class CharacterColider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = transform.position + (transform.forward * Input.GetAxis("Vertical") * maxSpeed) + (transform.right * Input.GetAxis("Horizontal") * maxSpeed);
+        Vector3 newVelocity = transform.forward * Input.GetAxis("Vertical") * maxSpeed;
+        myRigidbody.velocity = new Vector3(newVelocity.x, myRigidbody.velocity.y, newVelocity.z); 
 
-        rotation = rotation + Input.GetAxis("Mouse X") * rotationSpeed;
+
+    
+       
+
+         rotation = rotation + Input.GetAxis("Mouse X") * rotationSpeed;
         transform.rotation = Quaternion.Euler(new Vector3(0.0f, rotation, 0.0f));
 
         camRotation = camRotation + Input.GetAxis("Mouse X") * camRotationSpeed;
         cam.transform.localRotation = Quaternion.Euler(new Vector3(camRotation, 0.0f, 0.0f));
-        
+
+
+        myRigidbody = GetComponent<Rigidbody>();
     }
 }
